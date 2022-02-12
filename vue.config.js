@@ -13,7 +13,7 @@ module.exports = {
       .set('@', path.resolve(__dirname, 'src/'))
       .set('~', path.resolve(__dirname, 'src/assets/'))
     config.plugin('html').tap(args => {
-      args[0].title = `${process.env.VUE_APP_SITE_TITLE} ${process.env.npm_package_version}`
+      args[0].title = `${process.env.VUE_APP_SITE_TITLE} v${process.env.npm_package_version}`
       return args
     })
     config.plugin('stylelint')
