@@ -7,13 +7,8 @@
     height: `${realSize}px`,\
   }"
 )
-  .bg(
-    :class="{\
-      'breathing': isBreathing,\
-    }"
-  )
+  .bg
   .company-logo {{y}} / {{realSize}}
-    div {{isBreathing}}
 </template>
 <script>
 import { computed } from 'vue'
@@ -31,10 +26,6 @@ export default {
     y: {
       type: Number,
       default: () => 0,
-    },
-    isBreathing: {
-      type: Boolean,
-      default: () => false,
     },
   },
   setup (props) {
@@ -78,33 +69,36 @@ export default {
   z-index: 2;
   width: 100%;
   height: 100%;
-  // background: radial-gradient(50% 50% at 50% 50%, #adf0ff 78.65%, rgba(172, 240, 255, 0) 100%);
+  background: radial-gradient(50% 50% at 50% 50%, #adf0ff 78.65%, rgba(172, 240, 255, 0) 100%);
   mix-blend-mode: color-dodge;
   opacity: .7;
-  // transition: all .6s ease-in-out;
-  // animation-name: breathing;
-  // animation-duration: 3s;
-  // animation-iteration-count: infinite;
-  // animation-direction: alternate;
 
-  &.breathing {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(50% 50% at 50% 50%, #ddf9ff 83.85%, rgba(172, 240, 255, 0) 100%);
     mix-blend-mode: color-dodge;
-    opacity: .9;
+    animation-name: breathing;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+    @keyframes breathing {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: .9;
+      }
+    }
   }
-
-  // @keyframes breathing {
-  //   from {
-  //     background: radial-gradient(50% 50% at 50% 50%, #adf0ff 78.65%, rgba(172, 240, 255, 0) 100%);
-  //     // mix-blend-mode: color-dodge;
-  //     // opacity: .7;
-  //   }
-
-  //   to {
-  //     background: radial-gradient(50% 50% at 50% 50%, #ddf9ff 83.85%, rgba(172, 240, 255, 0) 100%);
-  //     // mix-blend-mode: color-dodge;
-  //     // opacity: .9;
-  //   }
-  // }
 }
 </style>

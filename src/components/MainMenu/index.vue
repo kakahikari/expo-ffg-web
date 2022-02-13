@@ -5,11 +5,9 @@
       :size="item.size"
       :x="item.x"
       :y="item.y"
-      :isBreathing="isBreathing"
     )
 </template>
 <script>
-import { ref } from 'vue'
 import CompanyButton from './CompanyButton'
 
 export default {
@@ -23,19 +21,9 @@ export default {
       { size: 'm', x: 200, y: 200 },
       { size: 'l', x: 300, y: 300 },
     ]
-    const isBreathing = ref(false)
-    const breathingControl = () => {
-      setTimeout(() => {
-        isBreathing.value = !isBreathing.value
-        breathingControl()
-        console.log(isBreathing.value)
-      }, 2000)
-    }
-    breathingControl()
 
     return {
       companyList,
-      isBreathing,
     }
   },
 }
