@@ -1,22 +1,28 @@
 <template lang="pug">
 .CompanyButton(
   :style="{\
-    top: `${y}px`,\
-    left: `${x}px`,\
+    top: `${realTop}px`,\
+    left: `${realLeft}px`,\
     width: `${realSize}px`,\
     height: `${realSize}px`,\
   }"
   @click="handleClick"
 )
   .bg
-  .company-logo {{y}} / {{realSize}}
+  .company-logo(
+    :style="{\
+      'background-image': `url(${require('./images/' + id + '.png')}`,\
+      width: `${realSize}px`,\
+      height: `${realSize}px`,\
+    }"
+  )
 </template>
 <script>
 import { computed, inject } from 'vue'
 
 export default {
   props: {
-    id: Number,
+    id: String,
     size: {
       type: String,
       default: () => '',
@@ -31,18 +37,26 @@ export default {
     },
   },
   setup (props) {
-    const appWitdh = computed(() => process.env.VUE_APP_WIDTH)
+    const appWidth = computed(() => process.env.VUE_APP_WIDTH)
+    const appHeight = computed(() => process.env.VUE_APP_HEIGHT)
     const realSize = computed(() => {
       switch (props.size) {
         case 'l':
-          return 768 / appWitdh.value * window.innerWidth
+          return 768 / appWidth.value * window.innerWidth
         case 'm':
-          return 370 / appWitdh.value * window.innerWidth
+          return 370 / appWidth.value * window.innerWidth
         case 's':
         default:
-          return 270 / appWitdh.value * window.innerWidth
+          return 270 / appWidth.value * window.innerWidth
       }
     })
+    const realTop = computed(() => {
+      return props.y / appHeight.value * window.innerHeight
+    })
+    const realLeft = computed(() => {
+      return props.x / appWidth.value * window.innerWidth
+    })
+
     const updateCompanyId = inject('updateCompanyId')
     const handleClick = () => {
       updateCompanyId(props.id)
@@ -50,6 +64,8 @@ export default {
 
     return {
       realSize,
+      realTop,
+      realLeft,
       // fn
       handleClick,
     }
@@ -71,6 +87,8 @@ export default {
 
 .company-logo {
   z-index: 4;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .bg {
