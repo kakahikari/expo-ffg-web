@@ -1,12 +1,25 @@
 <template lang="pug">
+//- span companyId: {{companyId}}
 MainMenu
 </template>
 <script>
+import { ref, provide } from 'vue'
 import MainMenu from '@/components/MainMenu'
+
 export default {
-  name: 'App',
   components: {
     MainMenu,
+  },
+  setup () {
+    const companyId = ref(null)
+    const updateCompanyId = (id) => {
+      companyId.value = id
+    }
+    provide('updateCompanyId', updateCompanyId)
+
+    return {
+      companyId,
+    }
   },
 }
 </script>

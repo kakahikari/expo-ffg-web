@@ -6,15 +6,17 @@
     width: `${realSize}px`,\
     height: `${realSize}px`,\
   }"
+  @click="handleClick"
 )
   .bg
   .company-logo {{y}} / {{realSize}}
 </template>
 <script>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
 export default {
   props: {
+    id: Number,
     size: {
       type: String,
       default: () => '',
@@ -41,8 +43,15 @@ export default {
           return 270 / appWitdh.value * window.innerWidth
       }
     })
+    const updateCompanyId = inject('updateCompanyId')
+    const handleClick = () => {
+      updateCompanyId(props.id)
+    }
+
     return {
       realSize,
+      // fn
+      handleClick,
     }
   },
 }
@@ -61,7 +70,7 @@ export default {
 }
 
 .company-logo {
-  z-index: 3;
+  z-index: 4;
 }
 
 .bg {
@@ -69,8 +78,7 @@ export default {
   z-index: 2;
   width: 100%;
   height: 100%;
-  background: radial-gradient(50% 50% at 50% 50%, #adf0ff 78.65%, rgba(172, 240, 255, 0) 100%);
-  mix-blend-mode: color-dodge;
+  background: radial-gradient(50% 50% at 50% 50%, #adf0ff 78.65%, rgba(255, 255, 255, 0) 100%);
   opacity: .7;
 
   &::after {
@@ -78,12 +86,11 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     display: block;
     width: 100%;
     height: 100%;
-    background: radial-gradient(50% 50% at 50% 50%, #ddf9ff 83.85%, rgba(172, 240, 255, 0) 100%);
-    mix-blend-mode: color-dodge;
+    background: radial-gradient(50% 50% at 50% 50%, #fff 83.85%, rgba(255, 255, 255, 0) 100%);
     animation-name: breathing;
     animation-duration: 2s;
     animation-timing-function: ease;
@@ -96,7 +103,7 @@ export default {
       }
 
       to {
-        opacity: .9;
+        opacity: 1;
       }
     }
   }
