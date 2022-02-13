@@ -34,7 +34,7 @@ export default {
   position: relative;
   width: 100%;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-image: url('../../assets/indexbg.jpg');
   border: red 1px solid;
 }

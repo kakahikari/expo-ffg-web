@@ -1,14 +1,16 @@
 <template lang="pug">
-//- span companyId: {{companyId}}
-MainMenu
+MainMenu(v-if="companyId === null")
+Detail(v-else)
 </template>
 <script>
 import { ref, provide } from 'vue'
 import MainMenu from '@/components/MainMenu'
+import Detail from '@/components/Detail'
 
 export default {
   components: {
     MainMenu,
+    Detail,
   },
   setup () {
     const companyId = ref(null)
@@ -34,7 +36,6 @@ $apple: red;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  // background-color: ;
+  color: #fff;
 }
 </style>
