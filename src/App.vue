@@ -1,15 +1,18 @@
 <template lang="pug">
 MainMenu(v-if="companyId === null")
+Detail00(v-else-if="companyId === '00FFG'")
 Detail(v-else)
 </template>
 <script>
 import { ref, provide } from 'vue'
 import MainMenu from '@/components/MainMenu'
+import Detail00 from '@/components/Detail00'
 import Detail from '@/components/Detail'
 
 export default {
   components: {
     MainMenu,
+    Detail00,
     Detail,
   },
   setup () {
