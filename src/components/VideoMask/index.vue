@@ -14,7 +14,7 @@
       width: `${videoWidth}px`,\
       height: `${videoHeight}px`,\
     }"
-    :src="`https://www.youtube.com/embed/${src}?autoplay=1&loop=1&controls=0&playlist=${src}`"
+    :src="`https://www.youtube.com/embed/${src}?autoplay=1&loop=1&rel=0&controls=0&hd=1&playlist=${src}`"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen

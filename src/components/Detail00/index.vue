@@ -74,7 +74,7 @@ import VideoMask from '@/components/VideoMask'
 
 const VIEDO_LIST = {
   en: 'nSX2KLSG6rc',
-  ch: '8JTHB-4PNKE',
+  ch: 'ujurTknsYF8',
 }
 
 export default {
