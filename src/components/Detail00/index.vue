@@ -9,19 +9,20 @@
   )
     .content__video
       img.content__video__img(
-        ref="content__video__img"
         :src="require('./images/videopic.jpg')"
       )
       .content__video__mask
         .content__video__mask__button.--ch(
+          v-if="videoList['ch']"
           :style="{\
             width: `${playButtonWidth}px`,\
             height: `${playButtonHeight}px`,\
-            'margin-bottom': `${playButtonMargin}px`,\
+            'margin-bottom': videoList['en'] ? `${playButtonMargin}px` : 0,\
           }"
           @click="handlePlayClick('ch')"
         )
         .content__video__mask__button.--en(
+          v-if="videoList['en']"
           :style="{\
             width: `${playButtonWidth}px`,\
             height: `${playButtonHeight}px`,\
@@ -71,18 +72,18 @@ VideoMask(
 <script>
 import { ref, computed, inject } from 'vue'
 import VideoMask from '@/components/VideoMask'
-
-const VIEDO_LIST = {
-  en: 'nSX2KLSG6rc',
-  ch: 'ujurTknsYF8',
-}
+import { COMPANAY_LIST } from '@/configs'
 
 export default {
+  props: {
+    id: String,
+  },
+
   components: {
     VideoMask,
   },
 
-  setup () {
+  setup (props) {
     const appWidth = computed(() => process.env.VUE_APP_WIDTH)
     const appHeight = computed(() => process.env.VUE_APP_HEIGHT)
 
@@ -96,13 +97,13 @@ export default {
 
     const isPlay = ref(false)
     const videoSrc = ref(null)
+    const videoList = computed(() => COMPANAY_LIST.find(item => item.id === props.id).videoList)
     const handlePlayClick = (lang) => {
       if (isPlay.value) {
         isPlay.value = false
         return
       }
-
-      videoSrc.value = VIEDO_LIST[lang]
+      videoSrc.value = videoList.value[lang]
       isPlay.value = true
     }
 
@@ -130,6 +131,7 @@ export default {
       playButtonMargin,
       isPlay,
       videoSrc,
+      videoList,
       imageSetMargin,
       imageSetHight,
       backButtonLeft,

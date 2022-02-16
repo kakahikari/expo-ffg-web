@@ -1,7 +1,7 @@
 <template lang="pug">
 MainMenu(v-if="companyId === null")
-Detail00(v-else-if="companyId === '00FFG'")
-Detail(v-else)
+Detail00(v-else-if="companyId === '00FFG'" :id="companyId")
+Detail(v-else :id="companyId")
 </template>
 <script>
 import { ref, provide } from 'vue'

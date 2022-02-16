@@ -30,7 +30,7 @@ export default {
 
   emits: ['closeClick'],
 
-  setup (pross, { emit }) {
+  setup (props, { emit }) {
     const appWidth = computed(() => process.env.VUE_APP_WIDTH)
     const appHeight = computed(() => process.env.VUE_APP_HEIGHT)
 
