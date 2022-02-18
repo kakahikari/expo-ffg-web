@@ -118,6 +118,17 @@
       }"
     )
 
+  .go-to-mag(
+    v-if="!imageList"
+    :style="{\
+      top: `${goMagTop}px`,\
+      left: `${goMagLeft}px`,\
+      width: `${goMagWidth}px`,\
+      height: `${goMagHeight}px`,\
+    }"
+    @click="heandleGoToClick('22MAG')"
+  )
+
   .back-button(
     :style="{\
       top: `${backButtonTop}px`,\
@@ -167,9 +178,14 @@ export default {
 
     const contentText = ref(null)
     const textList = computed(() => COMPANAY_LIST.find(item => item.id === props.id).textList)
-    const textTop = computed(() => {
-      if (!contentText.value) return 0
-      return 300 - (contentText.value.clientHeight / 2)
+    const textTop = ref(null)
+    const calcTextTop = () => {
+      console.log('hello')
+      if (!contentText.value) textTop.value = 0
+      else textTop.value = 300 - (contentText.value.clientHeight / 2)
+    }
+    onMounted(() => {
+      calcTextTop()
     })
 
     const videoTop = computed(() => 1184 / appHeight.value * window.innerHeight)
@@ -194,6 +210,17 @@ export default {
     const backButtonLeft = computed(() => 0 / appWidth.value * window.innerWidth)
     const backButtonWidth = computed(() => 537 / appWidth.value * window.innerWidth)
     const backButtonHeight = computed(() => 350 / appHeight.value * window.innerHeight)
+
+    const goMagTop = computed(() => 1480 / appHeight.value * window.innerHeight)
+    const goMagLeft = computed(() => 2703 / appWidth.value * window.innerWidth)
+    const goMagWidth = computed(() => 873 / appWidth.value * window.innerWidth)
+    const goMagHeight = computed(() => 436 / appHeight.value * window.innerHeight)
+    const heandleGoToClick = (id) => {
+      updateCompanyId(id)
+      setTimeout(() => {
+        calcTextTop()
+      }, 50)
+    }
 
     const updateCompanyId = inject('updateCompanyId')
     const heandleBackClick = () => {
@@ -236,6 +263,10 @@ export default {
       imagePaginationTop,
       boxPaddingX,
       boxPaddingY,
+      goMagTop,
+      goMagLeft,
+      goMagWidth,
+      goMagHeight,
       backButtonLeft,
       backButtonTop,
       backButtonWidth,
@@ -245,6 +276,7 @@ export default {
       videoList,
       // fn
       handlePlayClick,
+      heandleGoToClick,
       heandleBackClick,
       // debug
       window,
@@ -404,6 +436,14 @@ export default {
 .content__image__item__box__subtitle {
   font-size: 14px;
   font-weight: 500;
+}
+
+.go-to-mag {
+  cursor: pointer;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url('./images/gotomag.png');
 }
 
 .back-button {
