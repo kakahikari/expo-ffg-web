@@ -176,7 +176,6 @@ export default {
     const textList = computed(() => COMPANAY_LIST.find(item => item.id === props.id).textList)
     const textTop = ref(null)
     const calcTextTop = () => {
-      console.log('hello')
       if (!contentText.value) textTop.value = 0
       else textTop.value = 300 - (contentText.value.clientHeight / 2)
     }
