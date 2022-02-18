@@ -29,7 +29,7 @@
   )
 </template>
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 export default {
   props: {
     isShow: Boolean,
@@ -44,6 +44,12 @@ export default {
 
     const video = ref(null)
     const videoIsPlay = ref(true)
+    watch(
+      props.isShow,
+      (newVal) => {
+        videoIsPlay.value = newVal
+      },
+    )
 
     const videoWidth = computed(() => 2880 / appWidth.value * window.innerWidth)
     const videoHeight = computed(() => 1620 / appHeight.value * window.innerHeight)
