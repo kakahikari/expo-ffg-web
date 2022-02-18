@@ -1,10 +1,10 @@
 <template lang="pug">
 .Detail
   //- debug
-  div window.innerWidth= {{window.innerWidth}}
-  div window.innerHeight= {{window.innerHeight}}
+  span window.innerWidth= {{window.innerWidth}},
+  span window.innerHeight= {{window.innerHeight}}
   div id= {{id}}
-  //- debug
+
   .logo(
     :style="{\
       top: `${logoTop}px`,\
@@ -15,6 +15,34 @@
     }"
   )
   .content
+    .content__text(
+      ref="contentText"
+      :style="{\
+        top: `${textTop}px`,\
+        left: `${videoLeft}px`,\
+        right: '0px',\
+      }"
+    )
+      .content__text__ch(v-if="textList")
+        .content__text__ch__line(
+          v-for="item, index of textList['ch']"
+        ) {{ item }}
+          span.flag(
+            v-if="index === 0"
+            :style="{\
+              'background-image': `url(${require('./images/flags/' + flag + '.jpg')}`,\
+            }"
+          )
+      .content__text__en(v-if="textList")
+        .content__text__en__line(
+          v-for="item, index of textList['en']"
+        ) {{ item }}
+          span.flag(
+            v-if="index === 0"
+            :style="{\
+              'background-image': `url(${require('./images/flags/' + flag + '.jpg')}`,\
+            }"
+          )
     .content__video(
       v-if="videoList"
       :style="{\
@@ -106,7 +134,7 @@ VideoMask(
 )
 </template>
 <script>
-import { ref, computed, inject } from 'vue'
+import { ref, computed, inject, onMounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import SwiperCore, { Autoplay, Pagination } from 'swiper'
 import VideoMask from '@/components/VideoMask'
@@ -130,10 +158,19 @@ export default {
     const appWidth = computed(() => process.env.VUE_APP_WIDTH)
     const appHeight = computed(() => process.env.VUE_APP_HEIGHT)
 
+    const flag = COMPANAY_LIST.find(item => item.id === props.id).flag
+
     const logoTop = computed(() => 314 / appHeight.value * window.innerHeight)
     const logoLeft = computed(() => 134 / appWidth.value * window.innerWidth)
     const logoWidth = computed(() => 1024 / appWidth.value * window.innerWidth)
     const logoHeight = computed(() => 1024 / appHeight.value * window.innerHeight)
+
+    const contentText = ref(null)
+    const textList = computed(() => COMPANAY_LIST.find(item => item.id === props.id).textList)
+    const textTop = computed(() => {
+      if (!contentText.value) return 0
+      return 300 - (contentText.value.clientHeight / 2)
+    })
 
     const videoTop = computed(() => 1184 / appHeight.value * window.innerHeight)
     const videoLeft = computed(() => 1358 / appWidth.value * window.innerWidth)
@@ -178,10 +215,14 @@ export default {
     return {
       appWidth,
       appHeight,
+      flag,
       logoTop,
       logoLeft,
       logoWidth,
       logoHeight,
+      contentText,
+      textList,
+      textTop,
       videoTop,
       videoLeft,
       videoWidth,
@@ -222,6 +263,58 @@ export default {
 
 .logo {
   position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.content__text {
+  position: absolute;
+  padding: 30px 0;
+  background: linear-gradient(270deg, rgba(73, 222, 255, .45) 0%, rgba(80, 216, 223, 0) 78.44%);
+}
+
+.content__text__ch__line,
+.content__text__en__line {
+  position: relative;
+  padding-left: 14px;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -7px;
+    display: block;
+    content: '';
+    width: 7px;
+    background: #fff;
+    border-radius: 5px;
+  }
+}
+
+.content__text__ch__line {
+  font-style: normal;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 119.5%;
+  text-align: left;
+  margin-bottom: 19px;
+}
+
+.content__text__en__line {
+  font-style: normal;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 119.5%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.flag {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 20px;
+  width: 40px;
+  height: 27px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
