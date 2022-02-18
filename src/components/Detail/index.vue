@@ -1,5 +1,7 @@
 <template lang="pug">
 .Detail
+  div window.innerHeight= {{window.innerHeight}}
+  div window.innerWidth= {{window.innerWidth}}
   div id= {{id}}
   div imageList= {{imageList}}
   div piclist= {{picList}}
@@ -203,6 +205,8 @@ export default {
       // fn
       handlePlayClick,
       heandleBackClick,
+      // debug
+      window,
     }
   },
 }
@@ -282,8 +286,9 @@ export default {
   bottom: 0;
   display: inline-block;
   font-style: normal;
-  font-size: 40px;
+  font-size: 20px;
   font-weight: bold;
+  text-align: right;
   color: #fff;
   background: linear-gradient(180deg, #23d3de 0%, rgba(35, 211, 222, .29) 100%);
   line-height: 119.5%;
@@ -304,7 +309,7 @@ export default {
 }
 
 .content__image__item__box__subtitle {
-  font-size: 28px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -326,9 +331,9 @@ export default {
 }
 
 :deep(.swiper-pagination-bullet) {
-  margin: 0 30px;
-  width: 34px;
-  height: 34px;
+  margin: 0 15px;
+  width: 19px;
+  height: 19px;
   background: #31cbcb;
   opacity: .3;
 }
