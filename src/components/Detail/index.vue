@@ -1,7 +1,8 @@
 <template lang="pug">
 .Detail
   div id= {{id}}
-  div videoList= {{videoList}}
+  div imageList= {{imageList}}
+  div piclist= {{picList}}
   .logo(
     :style="{\
       top: `${logoTop}px`,\
@@ -49,6 +50,43 @@
             }"
             @click="handlePlayClick('en')"
           )
+    Swiper.content__image(
+      v-if="imageList"
+      :style="{\
+        top: `${videoTop}px`,\
+        left: `${imageLeft}px`,\
+        width: `${videoWidth}px`,\
+        height: `${videoHeight}px`,\
+      }"
+      :autoplay="{ delay: 2000, disableOnInteraction: false }"
+      :pagination="{\
+        clickable: true,\
+        el: '.content__image__pagination',\
+      }"
+    )
+      SwiperSlide.content__image__item(
+        v-for="item of imageList"
+        :key="item"
+        :style="{\
+          'background-image': `url(${require('./images/' + id + '/' + item.fileName)}`,\
+        }"
+      )
+        .content__image__item__box.--l(
+          :style="{\
+            'padding': `${boxPaddingY}px ${boxPaddingX}px`,\
+          }"
+        )
+          .content__image__item__box__title(v-if="item.titleText") {{ item.titleText }}
+          .content__image__item__box__subtitle(v-if="item.subtitleText") {{ item.subtitleText }}
+          .content__image__item__box__subtitle(v-if="item.subtitleText2") {{ item.subtitleText2 }}
+    .content__image__pagination(
+      :style="{\
+        top: `${imagePaginationTop}px`,\
+        left: `${imageLeft}px`,\
+        width: `${videoWidth}px`,\
+      }"
+    )
+
   .back-button(
     :style="{\
       top: `${backButtonTop}px`,\
@@ -66,8 +104,14 @@ VideoMask(
 </template>
 <script>
 import { ref, computed, inject } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import SwiperCore, { Autoplay, Pagination } from 'swiper'
 import VideoMask from '@/components/VideoMask'
 import { COMPANAY_LIST } from '@/configs'
+import 'swiper/swiper.scss'
+import 'swiper/components/pagination/pagination.scss'
+
+SwiperCore.use([Autoplay, Pagination])
 
 export default {
   props: {
@@ -75,6 +119,8 @@ export default {
   },
 
   components: {
+    Swiper,
+    SwiperSlide,
     VideoMask,
   },
 
@@ -97,6 +143,13 @@ export default {
     const playButtonMargin = computed(() => 48 / appHeight.value * window.innerHeight)
 
     const playButto2nWidth = computed(() => 242 / appWidth.value * window.innerWidth)
+
+    const imageList = computed(() => COMPANAY_LIST.find(item => item.id === props.id).imageList)
+    const imageLeft = computed(() => 2562 / appWidth.value * window.innerWidth)
+    const imagePaginationTop = computed(() => 1837 / appHeight.value * window.innerHeight)
+
+    const boxPaddingX = computed(() => 17 / appWidth.value * window.innerWidth)
+    const boxPaddingY = computed(() => 7 / appWidth.value * window.innerWidth)
 
     const backButtonTop = computed(() => 1810 / appHeight.value * window.innerHeight)
     const backButtonLeft = computed(() => 0 / appWidth.value * window.innerWidth)
@@ -135,6 +188,11 @@ export default {
       playButtonHeight,
       playButtonMargin,
       playButto2nWidth,
+      imageList,
+      imageLeft,
+      imagePaginationTop,
+      boxPaddingX,
+      boxPaddingY,
       backButtonLeft,
       backButtonTop,
       backButtonWidth,
@@ -204,11 +262,79 @@ export default {
   background-image: url('./images/play.svg');
 }
 
+.content__image {
+  position: absolute;
+  z-index: 8;
+}
+
+.content__image__item {
+  position: relative;
+  z-index: 8;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content__image__item__box {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  font-style: normal;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(180deg, #23d3de 0%, rgba(35, 211, 222, .29) 100%);
+  line-height: 119.5%;
+  text-shadow: 0 4px 10px #00404e;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -72px;
+    content: '';
+    display: block;
+    width: 72px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url('./images/picword_l_head.png');
+  }
+}
+
+.content__image__item__box__subtitle {
+  font-size: 28px;
+  font-weight: 500;
+}
+
 .back-button {
   cursor: pointer;
   position: absolute;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url('./images/back.png');
+}
+
+// swiper
+.content__image__pagination {
+  position: absolute;
+}
+
+:deep(.swiper-pagination) {
+  bottom: -57px;
+}
+
+:deep(.swiper-pagination-bullet) {
+  margin: 0 30px;
+  width: 34px;
+  height: 34px;
+  background: #31cbcb;
+  opacity: .3;
+}
+
+:deep(.swiper-pagination-bullet-active) {
+  background: #23d3de;
+  opacity: 1;
 }
 </style>
