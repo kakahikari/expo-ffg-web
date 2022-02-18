@@ -1,10 +1,10 @@
 <template lang="pug">
 .Detail
-  div window.innerHeight= {{window.innerHeight}}
+  //- debug
   div window.innerWidth= {{window.innerWidth}}
+  div window.innerHeight= {{window.innerHeight}}
   div id= {{id}}
-  div imageList= {{imageList}}
-  div piclist= {{picList}}
+  //- debug
   .logo(
     :style="{\
       top: `${logoTop}px`,\
@@ -82,6 +82,7 @@
           .content__image__item__box__subtitle(v-if="item.subtitleText") {{ item.subtitleText }}
           .content__image__item__box__subtitle(v-if="item.subtitleText2") {{ item.subtitleText2 }}
     .content__image__pagination(
+      v-show="imageList && imageList.length > 1"
       :style="{\
         top: `${imagePaginationTop}px`,\
         left: `${imageLeft}px`,\
@@ -111,7 +112,6 @@ import SwiperCore, { Autoplay, Pagination } from 'swiper'
 import VideoMask from '@/components/VideoMask'
 import { COMPANAY_LIST } from '@/configs'
 import 'swiper/swiper.scss'
-import 'swiper/components/pagination/pagination.scss'
 
 SwiperCore.use([Autoplay, Pagination])
 
@@ -331,10 +331,13 @@ export default {
 }
 
 :deep(.swiper-pagination-bullet) {
+  cursor: pointer;
+  display: inline-block;
   margin: 0 15px;
   width: 19px;
   height: 19px;
   background: #31cbcb;
+  border-radius: 50%;
   opacity: .3;
 }
 
