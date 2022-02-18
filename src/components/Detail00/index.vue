@@ -205,7 +205,6 @@ export default {
 
   .image {
     width: 22%;
-    height: 100px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;

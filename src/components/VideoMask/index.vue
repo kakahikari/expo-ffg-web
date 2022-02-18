@@ -96,7 +96,6 @@ export default {
 .close-button {
   position: relative;
   z-index: 10;
-  height: 100px;
   background-image: url('./images/XXX.svg');
   background-position: right center;
   background-repeat: no-repeat;
