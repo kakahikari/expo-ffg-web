@@ -74,10 +74,6 @@
         template(v-else)
           //- 只能是只有英文
           .content__video__mask__button2(
-            :style="{\
-              width: `${playButto2nWidth}px`,\
-              height: `${playButto2nWidth}px`,\
-            }"
             @click="handlePlayClick('en')"
           )
     Swiper.content__image(
@@ -301,6 +297,7 @@ export default {
 
 .content__text {
   position: absolute;
+  z-index: 2;
   padding: 30px 0;
   background: linear-gradient(270deg, rgba(73, 222, 255, .45) 0%, rgba(80, 216, 223, 0) 78.44%);
 }
@@ -355,6 +352,20 @@ export default {
   position: absolute;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+
+  &::before {
+    position: absolute;
+    top: -11px;
+    right: -11px;
+    bottom: -11px;
+    left: -11px;
+    z-index: 1;
+    display: block;
+    content: '';
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url('./images/videobg.png');
+  }
 }
 
 .content__video__mask {
@@ -363,6 +374,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -388,7 +400,13 @@ export default {
 }
 
 .content__video__mask__button2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: url('./images/play.svg');
+  background-size: 121px 121px;
 }
 
 .content__image {
