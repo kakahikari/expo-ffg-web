@@ -304,6 +304,7 @@ export default {
 .content__text__ch__line,
 .content__text__en__line {
   position: relative;
+  padding-right: 72px;
   padding-left: 14px;
 
   &::before {
