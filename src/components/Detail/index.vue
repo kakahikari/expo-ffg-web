@@ -1,9 +1,9 @@
 <template lang="pug">
 .Detail
   //- debug
-  span window.innerWidth= {{window.innerWidth}},
-  span window.innerHeight= {{window.innerHeight}}
-  div id= {{id}}
+  //- span window.innerWidth= {{window.innerWidth}},
+  //- span window.innerHeight= {{window.innerHeight}}
+  //- div id= {{id}}
 
   .logo(
     :style="{\
